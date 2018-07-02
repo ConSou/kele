@@ -17,4 +17,9 @@ class Kele
     JSON.parse(response.body)
   end
 
+  def get_mentor_availability(mentor_id)
+    response = self.class.get('https://www.bloc.io/api/v1/mentors/id/student_availability', headers: {"authorization" => @auth_token}, body: {id: mentor_id})
+  end
+
+
 end
