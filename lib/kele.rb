@@ -1,9 +1,11 @@
 require 'HTTParty'
 require 'json'
+require_relative 'road_map'
 
 class Kele
   attr_reader :user
   include HTTParty
+  include RoadMap
 
   def initialize(email, password)
     @base_url = 'https://www.bloc.io/api/v1'
@@ -31,6 +33,5 @@ class Kele
     end
     return unbooked_arr
   end
-
 
 end
