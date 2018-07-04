@@ -40,4 +40,38 @@ class Kele
     return unbooked_arr
   end
 
+  def get_messages(page_num = nil)
+
+    if page_num != nil
+      response = self.class.get("#{@base_url}/message_threads", headers: {"authorization" => @auth_token}, body: {page: page_num})
+    else
+      response = self.class.get("#{@base_url}/message_threads", headers: {"authorization" => @auth_token})
+    end
+
+    JSON.parse(response.body)
+  end
+
+  def create_message
+
+    puts "Enter Recipient Id: "
+    recipient_id = gets
+
+    puts "Enter Subject: "
+    subject = gets
+
+    puts "Enter Message Body: "
+    stripped_text = gets
+
+    message_info = {
+      sender: @user["email"],
+      recipient_id: recipient_id.to_int ,
+      token: "unknown",
+      subject: subject,
+      stripped_text: stripped_text
+    }
+
+    message_post = self.class.post("#{@base_url}/messages", headers: {"authorization" => @auth_token}, body: message_info)
+
+  end
+
 end
