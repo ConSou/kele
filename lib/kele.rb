@@ -51,24 +51,16 @@ class Kele
     JSON.parse(response.body)
   end
 
-  def create_message
-
-    puts "Enter Recipient Id: "
-    recipient_id = gets
-
-    puts "Enter Subject: "
-    subject = gets
-
-    puts "Enter Message Body: "
-    stripped_text = gets
+  def create_message(recipient_id, stripped_text, subject = nil, token = nil)
 
     message_info = {
       sender: @user["email"],
-      recipient_id: recipient_id.to_int ,
-      token: "unknown",
+      recipient_id: recipient_id,
       subject: subject,
-      stripped_text: stripped_text
+      "stripped-text": stripped_text
     }
+
+    message_info[:token] = token if !token.nil?
 
     message_post = self.class.post("#{@base_url}/messages", headers: {"authorization" => @auth_token}, body: message_info)
 
